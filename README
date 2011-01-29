@@ -1,0 +1,14 @@
+This is a copy of the source found at http://code.google.com/p/dune2themaker/.
+
+I suggest using git-svn to synchronize between the SVN based development at
+code.google.com and this GIT repository.
+
+The aim of this repository is to:
+
+1) Provide a sane build system for 'Dune 2 - The Maker'.
+
+2) Remove cruft (stuff that does not belong into a VCS).
+
+3) Integrate whatever distros need.
+
+4) Hopefully merge those changes back.
