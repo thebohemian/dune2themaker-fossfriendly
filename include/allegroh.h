@@ -32,8 +32,6 @@
 
 // Needed by fblend (fast blending techniques (3 - 10 times faster than
 // default Allegro routines)
-#include "fblend.h"
-#include "sse.h"
-#include "mmx.h"
+#include <fblend.h>
 
 #endif /* ALLEGROH_H_ */
