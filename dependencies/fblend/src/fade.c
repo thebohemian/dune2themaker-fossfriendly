@@ -277,6 +277,7 @@ static void fblend_fade_15(BITMAP *src, BITMAP *dst, int src_x, int src_y, int d
 			d++;
 
 
+
 		}
 		
 		if (w & 1) {

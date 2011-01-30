@@ -497,6 +497,6 @@ static void fblend_sub_32(BITMAP *src, BITMAP *dst, int src_x, int src_y, int ds
 			}
 		}
 	}
-
+	
 	return;
 }
