@@ -16,8 +16,6 @@
 
 #include "allegro.h"
 #include "fblend.h"
-#include "mmx.h"
-#include "sse.h"
 
 static void fblend_rect_add_16(BITMAP *dst, int x, int y, int w, int h, int color, int fact);
 static void fblend_rect_add_15(BITMAP *dst, int x, int y, int w, int h, int color, int fact);
@@ -267,7 +265,7 @@ static void fblend_rect_add_15(BITMAP *dst, int x, int y, int w, int h, int colo
 static void fblend_rect_add_32(BITMAP *dst, int x, int y, int w, int h, int color, int fact) {
 
 	int i, j;
-	uint32_t msb_mask, low_mask;
+	unsigned long msb_mask, low_mask;
 
     if (fact != 256) {
 		/* Multiply the source by the factor */
@@ -279,13 +277,13 @@ static void fblend_rect_add_32(BITMAP *dst, int x, int y, int w, int h, int colo
 
 	for (j = 0; j < h; j++) {
 
-		uint32_t *d;
-		uint32_t color1;
-		uint32_t temp1, temp2;
+		unsigned long *d;
+		unsigned long color1;
+		unsigned long temp1, temp2;
 	
 		/* Read src line */
-		d = ((uint32_t *)(bmp_write_line(dst, y + j))) + x;		    
-
+		bmp_select(dst);
+		d = (unsigned long*)(bmp_write_line(dst, y + j) + x * sizeof(long));
 
 		for (i = w; i; i--) {
 			/* Read data, 1 pixel at a time */

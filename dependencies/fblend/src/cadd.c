@@ -10,14 +10,12 @@
  * This function is intended to replace the awefully slow 16 bit add
  * blender in Allegro.
  */
-
+ 
 /** \file cadd.c
  */
 
 #include "allegro.h"
 #include "fblend.h"
-#include "mmx.h"
-#include "sse.h"
 
 
 static void fblend_add_16(BITMAP *src, BITMAP *dst, int src_x, int src_y, int dst_x, int dst_y, int w, int h, int fact);
@@ -74,13 +72,13 @@ void fblend_add(BITMAP *src, BITMAP *dst, int x, int y, int fact) {
 #else
 
     int w, h;
-
+	
 	int src_x = 0, src_y = 0, dst_x = x, dst_y = y;
 	int src_depth, dst_depth;
-
+	
 	w = src->w;
 	h = src->h;
-
+	
 	/* Clip the image */
 	if (dst_x < 0) {
 		w += dst_x;
@@ -99,17 +97,17 @@ void fblend_add(BITMAP *src, BITMAP *dst, int x, int y, int fact) {
 
 	/* Nothing to do? */
 	if (w < 1 || h < 1)
-		return;
+		return;	
 
 	src_depth = bitmap_color_depth(src);
 	dst_depth = bitmap_color_depth(dst);
-
+	
 	/* Incorrct color depths */
 	if (!(src_depth == 16 && dst_depth == 16)
 			&& !(src_depth == 15 && dst_depth == 15)
 			&& !(src_depth == 32 && dst_depth == 32))
 		return;
-
+		
 	if (dst_depth == 15 || dst_depth == 16)
 		/* Adjust factor for 0->32 range */
 		fact = (fact + 7) >> 3;
@@ -120,7 +118,7 @@ void fblend_add(BITMAP *src, BITMAP *dst, int x, int y, int fact) {
 
 	acquire_bitmap(dst);
 
-	/* 16 bit code */
+	/* 16 bit code */	
 	if (src_depth == 16) {
 
 		#ifdef FBLEND_SSE
@@ -135,7 +133,7 @@ void fblend_add(BITMAP *src, BITMAP *dst, int x, int y, int fact) {
 		#endif
 		fblend_add_16(src, dst, src_x, src_y, dst_x, dst_y, w, h, fact);
 	}
-	/* 15 bit code */
+	/* 15 bit code */	
 	else if (src_depth == 15) {
 		#ifdef FBLEND_SSE
 			if (cpu_capabilities & CPU_SSE)
@@ -186,43 +184,43 @@ static void fblend_add_16(BITMAP *src, BITMAP *dst, int src_x, int src_y, int ds
     	int i, j;
 
 		for (j = 0; j < h; j++) {
-
+	
 			unsigned short *s, *d;
 			unsigned long color1, color2;
 			unsigned long res;
-
+	
 			/* Read src line */
-
+		
 			bmp_select(dst);
 			s = (unsigned short*)(src->line[src_y + j] + src_x * sizeof(short));
 			d = (unsigned short*)(bmp_write_line(dst, dst_y + j) + dst_x * sizeof(short));
-
+		    
 			for (i = w; i; i--) {
 				/* Read data, 1 pixel at a time */
 				color2 = *s;
-
+				
 				if (*s == MASK_COLOR_16) {
 					d++; s++;
 					continue;
 				}
-
+				
 				color1 = *d;
-
+						
 				/* Seperate out the components */
 				color2 = ((color2 << 16) | color2) & 0x7C0F81F;
 				color1 = ((color1 << 16) | color1) & 0x7C0F81F;
 
-				/* Do the conditionless add with saturation */
+				/* Do the conditionless add with saturation */			
 				color1 += color2;
 				res = color1 & 0x8010020;
 				res -= (res >> 5);
 				color1 |= res;
-
+							
 				/* Recombine the components */
 				color1 &= 0x7C0F81F;
 				color1 |= (color1 >> 16);
 				color1 &= 0xFFFF;
-
+	 
 	 			/* Write the data */
 				s++;
 				bmp_write16((unsigned long)d, color1);
@@ -232,15 +230,15 @@ static void fblend_add_16(BITMAP *src, BITMAP *dst, int src_x, int src_y, int ds
 	}
 	else {
 		int i, j;
-
+		
 		for (j = 0; j < h; j++) {
 
 			unsigned short *s, *d;
 			unsigned long color1, color2;
 			unsigned long res;
-
+	
 			/* Read src line */
-
+			
 			bmp_select(dst);
 			s = (unsigned short*)(src->line[src_y + j] + src_x * sizeof(short));
 			d = (unsigned short*)(bmp_write_line(dst, dst_y + j) + dst_x * sizeof(short));
@@ -248,33 +246,33 @@ static void fblend_add_16(BITMAP *src, BITMAP *dst, int src_x, int src_y, int ds
 			for (i = w; i; i--) {
 				/* Read data, 1 pixel at a time */
 				color2 = *s;
-
+				
 				if (*s == MASK_COLOR_16) {
 					d++; s++;
 					continue;
 				}
-
+				
 				color1 = *d;
-
+						
 				/* Seperate out the components */
 				color2 = ((color2 << 16) | color2) & 0x7C0F81F;
-
+			
 				/* Multiply the source by the factor */
 				color2 = ((color2 * fact) >> 5) & 0x7C0F81F;
-
+				
 				color1 = ((color1 << 16) | color1) & 0x7C0F81F;
-
-				/* Do the conditionless add with saturation */
+	
+				/* Do the conditionless add with saturation */			
 				color1 += color2;
 				res = color1 & 0x8010020;
 				res -= (res >> 5);
 				color1 |= res;
-
+							
 				/* Recombine the components */
 				color1 &= 0x7C0F81F;
 				color1 |= (color1 >> 16);
 				color1 &= 0xFFFF;
-
+	 
 	 			/* Write the data */
 				s++;
 				bmp_write16((unsigned long)d, color1);
@@ -282,7 +280,7 @@ static void fblend_add_16(BITMAP *src, BITMAP *dst, int src_x, int src_y, int ds
 			}
 		}
 	}
-
+	
 	return;
 }
 
@@ -292,45 +290,45 @@ static void fblend_add_15(BITMAP *src, BITMAP *dst, int src_x, int src_y, int ds
 	if (fact == 32) {
 
     	int i, j;
-
+    	
 		for (j = 0; j < h; j++) {
 
 			unsigned short *s, *d;
 			unsigned long color1, color2;
 			unsigned long res;
-
+	
 			/* Read src line */
-
+			
 			bmp_select(dst);
 			s = (unsigned short*)(src->line[src_y + j] + src_x * sizeof(short));
 			d = (unsigned short*)(bmp_write_line(dst, dst_y + j) + dst_x * sizeof(short));
-
+    
 			for (i = w; i; i--) {
 				/* Read data, 1 pixel at a time */
 				color2 = *s;
-
+			
 				if (*s == MASK_COLOR_15) {
 					d++; s++;
 					continue;
 				}
-
+			
 				color1 = *d;
-
+					
 				/* Seperate out the components */
 				color2 = ((color2 << 16) | color2) & 0x3E07C1F;
 				color1 = ((color1 << 16) | color1) & 0x3E07C1F;
 
-				/* Do the conditionless add with saturation */
+				/* Do the conditionless add with saturation */			
 				color1 += color2;
 				res = color1 & 0x4008020;
 				res -= (res >> 5);
 				color1 |= res;
-
+					
 				/* Recombine the components */
 				color1 &= 0x3E07C1F;
 				color1 |= (color1 >> 16);
 				color1 &= 0x7FFF;
-
+ 	
  				/* Write the data */
 				s++;
 				bmp_write16((unsigned long)d, color1);
@@ -345,43 +343,43 @@ static void fblend_add_15(BITMAP *src, BITMAP *dst, int src_x, int src_y, int ds
 			unsigned short *s, *d;
 			unsigned long color1, color2;
 			unsigned long res;
-
+	
 			/* Read src line */
-
+		
 			bmp_select(dst);
 			s = (unsigned short*)(src->line[src_y + j] + src_x * sizeof(short));
 			d = (unsigned short*)(bmp_write_line(dst, dst_y + j) + dst_x * sizeof(short));
-
+    
 			for (i = w; i; i--) {
 				/* Read data, 1 pixel at a time */
 				color2 = *s;
-
+			
 				if (*s == MASK_COLOR_15) {
 					d++; s++;
 					continue;
 				}
-
+			
 				color1 = *d;
-
+					
 				/* Seperate out the components */
 				color2 = ((color2 << 16) | color2) & 0x3E07C1F;
-
+			
 				/* Multiply the source by the factor */
 				color2 = ((color2 * fact) >> 5) & 0x3E07C1F;
-
+			
 				color1 = ((color1 << 16) | color1) & 0x3E07C1F;
 
-				/* Do the conditionless add with saturation */
+				/* Do the conditionless add with saturation */			
 				color1 += color2;
 				res = color1 & 0x4008020;
 				res -= (res >> 5);
 				color1 |= res;
-
+						
 				/* Recombine the components */
 				color1 &= 0x3E07C1F;
 				color1 |= (color1 >> 16);
 				color1 &= 0x7FFF;
-
+ 	
  				/* Write the data */
 				s++;
 				bmp_write16((unsigned long)d, color1);
@@ -389,7 +387,7 @@ static void fblend_add_15(BITMAP *src, BITMAP *dst, int src_x, int src_y, int ds
 			}
 		}
 	}
-
+	
 	return;
 }
 
@@ -401,26 +399,26 @@ static void fblend_add_32(BITMAP *src, BITMAP *dst, int src_x, int src_y, int ds
     	int i, j;
 
 		for (j = 0; j < h; j++) {
-
-			uint32_t *s, *d;
-			uint32_t color1, color2;
-			uint32_t temp1, temp2;
-
+	
+			unsigned long *s, *d;
+			unsigned long color1, color2;
+			unsigned long temp1, temp2;
+	
 			/* Read src line */
-
+		
 			bmp_select(dst);
-			s = ((uint32_t *)(bmp_read_line(src, src_y + j))) + src_x;
-			d = ((uint32_t *)(bmp_write_line(dst, dst_y + j))) + dst_x;
-
+			s = (unsigned long*)(src->line[src_y + j] + src_x * sizeof(long));
+			d = (unsigned long*)(bmp_write_line(dst, dst_y + j) + dst_x * sizeof(long));
+		    
 			for (i = w; i; i--) {
 				/* Read data, 1 pixel at a time */
 				color1 = *s;
-
+				
 				if (color1 == MASK_COLOR_32) {
 					d++; s++;
 					continue;
 				}
-
+				
 				color2 = *d;
 
 				temp1 = color1 & 0x808080;
@@ -430,10 +428,10 @@ static void fblend_add_32(BITMAP *src, BITMAP *dst, int src_x, int src_y, int ds
 				color2 = temp1;
 				temp1 = temp1 | temp2;
 				temp2 = color2 & temp2;
-
+				
 				color2 = temp1 & color1;
 				temp2 = (temp2 | color2) >> 7;
-
+				
 				color1 |= ((temp2 + 0x7F7F7F) ^ 0x7F7F7F) | temp1;
 
 	 			/* Write the data */
@@ -445,36 +443,36 @@ static void fblend_add_32(BITMAP *src, BITMAP *dst, int src_x, int src_y, int ds
 	}
 	else {
 		int i, j;
-
+		
 		for (j = 0; j < h; j++) {
 
-			uint32_t *s, *d;
-			uint32_t color1, color2;
-			uint32_t temp1, temp2;
-
+			unsigned long *s, *d;
+			unsigned long color1, color2;
+			unsigned long temp1, temp2;
+	
 			/* Read src line */
-
+			
 			bmp_select(dst);
-			s = ((uint32_t *)(bmp_read_line(src, src_y + j))) + src_x;
-			d = ((uint32_t *)(bmp_write_line(dst, dst_y + j))) + dst_x;
+			s = (unsigned long*)(src->line[src_y + j] + src_x * sizeof(long));
+			d = (unsigned long*)(bmp_write_line(dst, dst_y + j) + dst_x * sizeof(long));
 
 			for (i = w; i; i--) {
 				/* Read data, 1 pixel at a time */
 				color1 = *s;
-
+				
 				if (color1 == MASK_COLOR_32) {
 					d++; s++;
 					continue;
 				}
-
+				
 				color2 = *d;
-
+				
 				temp1 = color1 & 0xFF00FF;
 				temp2 = color1 & 0x00FF00;
-
+				
 				temp1 = ((temp1 * fact) >> 8) & 0xFF00FF;
 				temp2 = ((temp2 * fact) >> 8) & 0x00FF00;
-
+				
 				color1 = temp1 | temp2;
 
 				temp1 = color1 & 0x808080;
@@ -484,9 +482,9 @@ static void fblend_add_32(BITMAP *src, BITMAP *dst, int src_x, int src_y, int ds
 				color2 = temp1;
 				temp1 = temp1 | temp2;
 				temp2 = color2 & temp2;
-
+				
 				color2 = temp1 & color1;
-
+				
 				color1 |= ((((temp2 | color2) >> 7) + 0x7F7F7F) ^ 0x7F7F7F) | temp1;
 
 	 			/* Write the data */
@@ -496,6 +494,6 @@ static void fblend_add_32(BITMAP *src, BITMAP *dst, int src_x, int src_y, int ds
 			}
 		}
 	}
-
+	
 	return;
 }

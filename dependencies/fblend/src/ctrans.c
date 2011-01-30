@@ -16,8 +16,6 @@
 
 #include "allegro.h"
 #include "fblend.h"
-#include "mmx.h"
-#include "sse.h"
 
 
 static void fblend_trans_16(BITMAP *src, BITMAP *dst, int src_x, int src_y, int dst_x, int dst_y, int w, int h, int fact);
@@ -457,17 +455,20 @@ static void fblend_trans_15(BITMAP *src, BITMAP *dst, int src_x, int src_y, int 
 
 
 static void fblend_trans_32(BITMAP *src, BITMAP *dst, int src_x, int src_y, int dst_x, int dst_y, int w, int h, int fact) {
+
 	if (fact == 128 || fact == 127) {
 	   	int i, j;
     	
 		for (j = 0; j < h; j++) {
 
-			uint32_t *s, *d;
-			uint32_t color1, color2;
+			unsigned long *s, *d;
+			unsigned long color1, color2;
 		
 			/* Read src line */			
-			s = ((uint32_t*)(bmp_read_line(src, src_y + j))) + src_x;
-			d = ((uint32_t*)(bmp_write_line(dst, dst_y + j))) + dst_x;		    
+			bmp_select(dst);
+			s = (unsigned long*)(src->line[src_y + j] + src_x * sizeof(long));
+			d = (unsigned long*)(bmp_write_line(dst, dst_y + j) + dst_x * sizeof(long));
+		    
 			for (i = w; i; i--) {
  
 				/* Read data, 1 pixel at a time */
@@ -496,16 +497,17 @@ static void fblend_trans_32(BITMAP *src, BITMAP *dst, int src_x, int src_y, int 
 
 		for (j = 0; j < h; j++) {
 
-			uint32_t *s, *d;
-			uint32_t color1, color2;
+			unsigned long *s, *d;
+			unsigned long color1, color2;
 	
 			/* Read src line */
 			
-			s = ((uint32_t *)(bmp_read_line(src, src_y + j))) + src_x;
-			d = ((uint32_t *)(bmp_write_line(dst, dst_y + j))) + dst_x;
+			bmp_select(dst);
+			s = (unsigned long*)(src->line[src_y + j] + src_x * sizeof(long));
+			d = (unsigned long*)(bmp_write_line(dst, dst_y + j) + dst_x * sizeof(long));
 	    
 			for (i = w; i; i--) {
-				uint32_t temp1, temp2;
+				unsigned long temp1, temp2;
  
 				/* Read data, 1 pixel at a time */
 				color2 = *s;
@@ -532,6 +534,6 @@ static void fblend_trans_32(BITMAP *src, BITMAP *dst, int src_x, int src_y, int 
 			}
 		}
 	}
-
+	
 	return;
 }

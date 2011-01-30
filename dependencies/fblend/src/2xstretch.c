@@ -14,8 +14,6 @@
 
 #include "allegro.h"
 #include "fblend.h"
-#include "mmx.h"
-#include "sse.h"
 
 
 #ifdef FBLEND_MMX
