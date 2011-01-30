@@ -311,8 +311,9 @@ static int almp3_decode_frame_mp3(ALMP3_MP3 *mp3, char *inbuf, char *outbuf, int
 
 /* API functions */
 
-ALMP3_MP3 *almp3_create_mp3(void *data, int data_len) {
+ALMP3_MP3 *almp3_create_mp3(void *data_raw, int data_len) {
   ALMP3_MP3 *mp3;
+  char *data = (char *) data_raw;
   struct mpstr test_mpeg;
   unsigned char *p = (unsigned char *)data;
   int data_end_skipped, data_start_skipped;
@@ -330,7 +331,7 @@ ALMP3_MP3 *almp3_create_mp3(void *data, int data_len) {
 
   /* test for ID3v2 and if exists, skip it */
   data_start_skipped = almp3_get_id3v2_skip_bytes(p);
-  (char *)data += data_start_skipped;
+  data += data_start_skipped;
   data_len -= data_start_skipped;
 
   /* test the next 16 * MAXFRAMESIZE bytes after ID3v2 until we find one valid frame */
@@ -378,7 +379,7 @@ ALMP3_MP3 *almp3_create_mp3(void *data, int data_len) {
 
     data_start_skipped += skipbytes;
     data_len -= skipbytes;
-    (char *)data += skipbytes;
+    data += skipbytes;
   }
 
   /* must be layer III or II */
