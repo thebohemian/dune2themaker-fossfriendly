@@ -455,20 +455,17 @@ static void fblend_trans_15(BITMAP *src, BITMAP *dst, int src_x, int src_y, int 
 
 
 static void fblend_trans_32(BITMAP *src, BITMAP *dst, int src_x, int src_y, int dst_x, int dst_y, int w, int h, int fact) {
-
 	if (fact == 128 || fact == 127) {
 	   	int i, j;
     	
 		for (j = 0; j < h; j++) {
 
-			unsigned long *s, *d;
-			unsigned long color1, color2;
+			uint32_t *s, *d;
+			uint32_t color1, color2;
 		
 			/* Read src line */			
-			bmp_select(dst);
-			s = (unsigned long*)(src->line[src_y + j] + src_x * sizeof(long));
-			d = (unsigned long*)(bmp_write_line(dst, dst_y + j) + dst_x * sizeof(long));
-		    
+			s = ((uint32_t*)(bmp_read_line(src, src_y + j))) + src_x;
+			d = ((uint32_t*)(bmp_write_line(dst, dst_y + j))) + dst_x;		    
 			for (i = w; i; i--) {
  
 				/* Read data, 1 pixel at a time */
@@ -497,17 +494,16 @@ static void fblend_trans_32(BITMAP *src, BITMAP *dst, int src_x, int src_y, int 
 
 		for (j = 0; j < h; j++) {
 
-			unsigned long *s, *d;
-			unsigned long color1, color2;
+			uint32_t *s, *d;
+			uint32_t color1, color2;
 	
 			/* Read src line */
 			
-			bmp_select(dst);
-			s = (unsigned long*)(src->line[src_y + j] + src_x * sizeof(long));
-			d = (unsigned long*)(bmp_write_line(dst, dst_y + j) + dst_x * sizeof(long));
+			s = ((uint32_t *)(bmp_read_line(src, src_y + j))) + src_x;
+			d = ((uint32_t *)(bmp_write_line(dst, dst_y + j))) + dst_x;
 	    
 			for (i = w; i; i--) {
-				unsigned long temp1, temp2;
+				uint32_t temp1, temp2;
  
 				/* Read data, 1 pixel at a time */
 				color2 = *s;
@@ -534,6 +530,8 @@ static void fblend_trans_32(BITMAP *src, BITMAP *dst, int src_x, int src_y, int 
 			}
 		}
 	}
+
+	bmp_unwrite_line(dst);
 	
 	return;
 }

@@ -327,7 +327,7 @@ static void fblend_rect_trans_15(BITMAP *dst, int x, int y, int w, int h, int co
 static void fblend_rect_trans_32(BITMAP *dst, int x, int y, int w, int h, int color, int fact) {
 
 	int i, j;
-	unsigned long rb_source = color & 0xFF00FF,
+	uint32_t rb_source = color & 0xFF00FF,
 			g_source = color & 0x00FF00;
 
     if (fact != 256) {
@@ -340,13 +340,12 @@ static void fblend_rect_trans_32(BITMAP *dst, int x, int y, int w, int h, int co
 
 	for (j = 0; j < h; j++) {
 
-		unsigned long *d;
-		unsigned long color1;
-		unsigned long temp1;
+		uint32_t *d;
+		uint32_t color1;
+		uint32_t temp1;
 	
 		/* Read src line */
-		bmp_select(dst);
-		d = (unsigned long*)(bmp_write_line(dst, y + j) + x * sizeof(long));
+		d = ((uint32_t *)bmp_write_line(dst, y + j)) + x;
 
 		for (i = w; i; i--) {
 			/* Read data, 1 pixel at a time */
@@ -359,10 +358,12 @@ static void fblend_rect_trans_32(BITMAP *dst, int x, int y, int w, int h, int co
 			color1 = (((color1 * fact) >> 8) + g_source)  & 0x00FF00;
 	 
  			/* Write the data */
-			bmp_write32((unsigned long)d, color1 | temp1);
+			bmp_write32((unsigned long) d, color1 | temp1);
 			d++;
 		}
 	}
+
+	bmp_unwrite_line(dst);
 	
 	return;
 }
