@@ -21,7 +21,7 @@ int	iRest = 1;	// default rest value
 
 // the ultimate game variable(s)
 cGame          				game;
-cAbstractStructure     	*	structure[MAX_STRUCTURES];
+cAbstractStructure     	*	structure[MAX_STRUCTURES] = { 0 };
 cUnit          				unit[MAX_UNITS];
 cMap           				map;
 cMapEditor	  				mapEditor;
