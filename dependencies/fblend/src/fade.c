@@ -278,6 +278,10 @@ static void fblend_fade_15(BITMAP *src, BITMAP *dst, int src_x, int src_y, int d
 
 
 
+<<<<<<< HEAD
+
+=======
+>>>>>>>  * fixed blend operations for 32bit that went completely wrong on LP64 systems
 		}
 		
 		if (w & 1) {
