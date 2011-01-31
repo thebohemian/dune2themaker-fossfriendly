@@ -275,6 +275,8 @@ static void fblend_fade_15(BITMAP *src, BITMAP *dst, int src_x, int src_y, int d
 			s++;
 			bmp_write32((unsigned long)d, color1);
 			d++;
+
+
 		}
 		
 		if (w & 1) {
@@ -305,9 +307,9 @@ static void fblend_fade_32(BITMAP *src, BITMAP *dst, int src_x, int src_y, int d
 
    	unsigned long rb_source, g_source;
    	int i, j;
-	unsigned long *s, *d;
-	unsigned long color1;
-	unsigned long temp1;
+	uint32_t *s, *d;
+	uint32_t color1;
+	uint32_t temp1;
 
    	/* Split up components to allow us to do operations on all of them at the same time */
 	rb_source = color & 0x00FF00FF;
@@ -320,9 +322,9 @@ static void fblend_fade_32(BITMAP *src, BITMAP *dst, int src_x, int src_y, int d
 	for (j = 0; j < h; j++) {
 
 		/* Read src line */
-		bmp_select(dst);
-		s = (unsigned long*)(src->line[src_y + j] + src_x * sizeof(long));
-		d = (unsigned long*)(bmp_write_line(dst, dst_y + j) + dst_x * sizeof(long));
+		s = ((uint32_t *)(bmp_read_line(src, src_y + j))) + src_x;
+		d = ((uint32_t *)(bmp_write_line(dst, dst_y + j))) + dst_x;		    
+
 
 		for (i = w; i; i--) {
 			color1 = *s;
@@ -342,6 +344,8 @@ static void fblend_fade_32(BITMAP *src, BITMAP *dst, int src_x, int src_y, int d
 			d++;
 		}
 	}
+
+	bmp_unwrite_line(dst);
 
 	return;
 }
