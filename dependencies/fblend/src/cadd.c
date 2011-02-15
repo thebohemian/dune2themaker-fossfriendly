@@ -451,8 +451,8 @@ static void fblend_add_32(BITMAP *src, BITMAP *dst, int src_x, int src_y, int ds
 	
 			/* Read src line */
 			
-			s = ((unsigned long*)(bmp_read_line(src, src_y + j))) + src_x;
-			d = ((unsigned long*)(bmp_write_line(dst, dst_y + j))) + dst_x;
+			s = ((uint32_t *)(bmp_read_line(src, src_y + j))) + src_x;
+			d = ((uint32_t *)(bmp_write_line(dst, dst_y + j))) + dst_x;
 
 			for (i = w; i; i--) {
 				/* Read data, 1 pixel at a time */
