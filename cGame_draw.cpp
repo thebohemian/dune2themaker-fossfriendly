@@ -245,6 +245,7 @@ void cGame::combat_mouse()
 	}
 
 	if (MOUSE_BTN_LEFT()) {
+                PARTICLE_CREATE(mouse_x + (mapCamera->getX()), mouse_y + (mapCamera->getY()), OBJECT_BOOM03, -1, -1);
 		// When the mouse is pressed, we will check if the first coordinates are filled in
 		// if so, we will update the second coordinates. If the player holds his mouse we
 		// keep updating the second coordinates and create a 'border' (to select units with)
