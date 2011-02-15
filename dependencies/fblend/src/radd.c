@@ -302,7 +302,7 @@ static void fblend_rect_add_32(BITMAP *dst, int x, int y, int w, int h, int colo
 			d++;
 		}
 	}
-
+	
 	return;
 }
 
