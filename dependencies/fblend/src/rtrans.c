@@ -363,8 +363,6 @@ static void fblend_rect_trans_32(BITMAP *dst, int x, int y, int w, int h, int co
 		}
 	}
 
-	bmp_unwrite_line(dst);
-	
 	return;
 }
 

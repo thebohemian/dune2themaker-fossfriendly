@@ -345,7 +345,5 @@ static void fblend_fade_32(BITMAP *src, BITMAP *dst, int src_x, int src_y, int d
 		}
 	}
 
-	bmp_unwrite_line(dst);
-
 	return;
 }
