@@ -493,7 +493,5 @@ static void fblend_add_32(BITMAP *src, BITMAP *dst, int src_x, int src_y, int ds
 		}
 	}
 
-	bmp_unwrite_line(dst);
-	
 	return;
 }
