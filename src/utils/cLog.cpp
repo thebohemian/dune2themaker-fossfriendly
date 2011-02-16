@@ -1,5 +1,7 @@
 #include "../include/d2tmh.h"
 
+#include <sstream>
+
 cLogger *cLogger::instance = NULL;
 
 cLogger::cLogger() {
@@ -199,15 +201,15 @@ void cLogger::log(eLogLevel level, eLogComponent component, const char *event, c
 }
 
 std::string cLogger::getIntegerAsString(int value) {
-	char numberChar[32];
-	sprintf(numberChar, "%d", value);
-	return std::string(numberChar);
+	std::ostringstream oss;
+	oss << std::dec << value;
+	return oss.str();
 }
 
 std::string cLogger::getLongAsString(long value) {
-	char numberChar[256];
-	sprintf(numberChar, "%d", value);
-	return std::string(numberChar);
+	std::ostringstream oss;
+	oss << std::dec << value;
+	return oss.str();
 }
 
 void cLogger::logCommentLine(const char *txt) {
