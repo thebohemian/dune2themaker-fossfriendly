@@ -859,6 +859,7 @@ void install_structures()
   structures[SLAB1].hp   = 25;            // Not functional in-game, only for building
   structures[SLAB1].bmp_width = 16*2;
   structures[SLAB1].bmp_height = 16*2;
+
   strcpy(structures[SLAB1].name, "Concrete Slab");
 
   structures[SLAB4].bmp = (BITMAP *)gfxdata[PLACE_SLAB4].dat; // in case an invalid bitmap, we are a windtrap
@@ -1215,10 +1216,10 @@ void setMusicVolume(int i) {
 
 void mp3_play_file(char filename[VOLUME_MAX]) {
 	char *data;  // mp3 file in memory
-	int len;     // length of file(also the buffer)
+	size_t len;     // length of file(also the buffer)
 	FILE *f = NULL;  // file.mp3
 
-	len = (int)file_size(filename);
+	len = (size_t) file_size_ex(filename);
 
 	data = new char[len];
 	f = fopen(filename, "r");
