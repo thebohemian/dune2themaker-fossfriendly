@@ -12,6 +12,8 @@
 
 // TODO: Clean this class up big time.
 
+// Forward declarations
+#include <GameState.h>
 
 class cGame {
 
@@ -89,8 +91,8 @@ public:
     void preparementat(bool bTellHouse);
     bool setupGame();
     void shutdown();
-    bool isState(int thisState);
-    void setState(int thisState);
+    bool isState(GameState thisState);
+    void setState(GameState thisState);
     int getMaxVolume()
     {
         return iMaxVolume;
@@ -122,7 +124,7 @@ private:
     void draw_movie(int iType);
     bool isResolutionInGameINIFoundAndSet();
     void setScreenResolutionFromGameIniSettings();
-    int state;
+    GameState state;
 
 	int iMaxVolume;
 

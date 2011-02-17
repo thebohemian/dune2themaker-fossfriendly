@@ -6,6 +6,7 @@
  */
 
 #include "../include/d2tmh.h"
+#include <GameState.h>
 
 cKeyboardManager::cKeyboardManager() {
 }
@@ -75,7 +76,7 @@ void cKeyboardManager::DEBUG_KEYS() {
         game.iMission = 9;
         game.iRegion = 22;
         game.iWinQuota = -1;
-        game.setState(GAME_BRIEFING);
+        game.setState(BRIEFING);
         playMusicByType(MUSIC_BRIEFING);
         game.iMentatSpeak = -1;
     }
@@ -122,7 +123,7 @@ void cKeyboardManager::DEBUG_KEYS() {
         game.iMission = 3;
         game.iRegion = 6;
         game.iWinQuota = -1;
-        game.setState(GAME_BRIEFING);
+        game.setState(BRIEFING);
         playMusicByType(MUSIC_BRIEFING);
         game.iMentatSpeak = -1;
     }
@@ -132,7 +133,7 @@ void cKeyboardManager::DEBUG_KEYS() {
         game.iMission = 4;
         game.iRegion = 10;
         game.iWinQuota = -1;
-        game.setState(GAME_BRIEFING);
+        game.setState(BRIEFING);
         playMusicByType(MUSIC_BRIEFING);
         game.iMentatSpeak = -1;
     }
@@ -142,7 +143,7 @@ void cKeyboardManager::DEBUG_KEYS() {
         game.iMission = 5;
         game.iRegion = 13;
         game.iWinQuota = -1;
-        game.setState(GAME_BRIEFING);
+        game.setState(BRIEFING);
         playMusicByType(MUSIC_BRIEFING);
         game.iMentatSpeak = -1;
     }

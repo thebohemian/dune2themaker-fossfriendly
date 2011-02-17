@@ -6,6 +6,7 @@
  */
 
 #include "../include/d2tmh.h"
+#include <GameState.h>
 
 cMessageDrawer::cMessageDrawer() {
 	init();
@@ -24,7 +25,7 @@ void cMessageDrawer::init() {
 void cMessageDrawer::think() {
 	int iLimit=250;
 
-	if (game.isState(GAME_REGION)) {
+	if (game.isState(REGION)) {
 		iLimit=600;
 	}
 

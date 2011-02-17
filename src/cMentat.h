@@ -21,6 +21,8 @@
 #ifndef CMENTAT_H
 #define CMENTAT_H
 
+#include <GameState.h>
+
 class cMentat {
 
 private:
@@ -47,7 +49,7 @@ public:
 	virtual void draw()=0;
 
 	void think();
-	void prepare(bool bTellHouse, int state, int house, int region);
+	void prepare(bool bTellHouse, GameState state, int house, int region);
 
 	cMentat();
 	virtual ~cMentat();
