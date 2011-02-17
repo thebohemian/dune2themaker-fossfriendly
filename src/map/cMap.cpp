@@ -301,7 +301,7 @@ void cMap::clear_spot(int c, int size, int player)
 
 
 	   /*
-	   if (game.state == GAME_PLAYING)
+	   if (game.state == PLAYING)
 	   {
 	   char msg[255];
 	   sprintf(msg, "X %d, Y %d -> CX %d, CY = %d", x, y, cell_x, cell_y);

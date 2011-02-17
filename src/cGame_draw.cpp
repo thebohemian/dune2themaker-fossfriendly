@@ -14,6 +14,7 @@
 */
 
 #include "include/d2tmh.h"
+#include <GameState.h>
 
 // Fading between menu items
 void cGame::FADE_OUT()
@@ -41,7 +42,7 @@ void cGame::losing()
     if (cMouse::getInstance()->isLeftButtonClicked())
     {
         // OMG, MENTAT IS NOT HAPPY
-        state = GAME_LOSEBRIEF;
+        state = LOSEBRIEF;
 
         if (bSkirmish) {
             game.mission_init();
@@ -65,7 +66,7 @@ void cGame::winning()
     if (cMouse::getInstance()->isLeftButtonClicked())
     {
         // SELECT YOUR NEXT CONQUEST
-        state = GAME_WINBRIEF;
+        state = WINBRIEF;
 
         if (bSkirmish) {
             game.mission_init();
