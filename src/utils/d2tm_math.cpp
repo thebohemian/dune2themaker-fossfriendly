@@ -128,7 +128,7 @@ float fDegrees(int x1, int y1, int x2, int y2)
   //  note: it works now, so dont touch it yet (dont fix anything that aint broken)
   angle = (atan2(delta_x, delta_y));
 
-  double x = angle / PI * 180.0f;
+  double x = angle / M_PI * 180.0f;
 
   angle = x;
 
@@ -150,7 +150,7 @@ float fDegrees(int x1, int y1, int x2, int y2)
   angle = (atan2(delta_x, delta_y));
 
   // convert to fDegrees
-  angle =  angle * (180 / PI);
+  angle =  angle * (180 / M_PI);
 
   angle += 180;
   return angle;

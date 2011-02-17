@@ -24,61 +24,10 @@
 #define MOD_D2TM		1
 //#define MOD_MINE		2		// own made mod
 
-#define Y_DRAWOFFSET	24
-
-#define MAX_WORLD		4			// 4 worlds is enough for now
-#define MAX_REGIONS		27			// not more then 27 regions as dune 2 has
-
-// MATH
-#define PI      3.1415926535897932384626433832795   // a definition of PI
-
-// Font size
-#define GAME_FONTSIZE 8
-
-// Buffer lenght of MP3 playback
-#define MP3_BUFFER_LEN  16384
-
-// Max length of a path (per unit)
-#define MAX_PATH_SIZE    256
-
-// maximum of 99 orders
-#define MAX_QUE 99
-
 #define MAP_W_MAX        64     // max of width
 #define MAP_H_MAX        64     // max of height
 
 #define MAX_CELLS    (MAP_W_MAX * MAP_H_MAX) // use width and height to determine max
-
-// INTRO SCENES:
-#define SCENE_NONE		-1
-#define SCENE_DUNE		0
-#define SCENE_ARRAKIS	1		// the planet arrakis... known as dune
-#define SCENE_LANDSAND	2		// land of sand (home of the spice melange)
-#define SCENE_SPICE		3		// the spice controls the empire, whoever controls dune, controls the spice
-#define SCENE_EMPEROR	4		// the emperor has proposed a challange to each of the houses
-#define SCENE_EMPTALK	5		// The House that produces the most spice, whill control dune. There are no set
-								// territories and no rules of engagement
-#define SCENE_ARMIES	6		// vast armies have arrived
-
-// now 3 houses fight, for control of dune (no image, blank)
-
-#define SCENE_ATREIDES	7		// the noble atreides
-#define SCENE_ORDOS		8		// the insidious ordos
-#define SCENE_HARKONNEN	9		// the evil harkonnen
-#define SCENE_FIRE		10		// only one house will prevail...
-#define SCENE_BEGINS	11		// your battle for dune begins.. NOW!
-
-// Indexes for keeping score
-#define INDEX_KILLS_UNITS   0
-#define INDEX_KILLS_STRUCTURES 1
-
-// VISIBILITY (on a map)
-#define MAP_VISIBLE       0
-#define MAP_FOW           1   // fog of war
-#define MAP_FOG           2   // area is still fogged
-
-// SCROLLING (on a map)
-#define MAP_SCROLLSPEED   TILE_SIZE_PIXELS   // pixels per frames scrolling.
 
 // MEMORY USAGE: (units, structures, etc , more info below)
 #define MAX_UNITS        300     // max of units in the game

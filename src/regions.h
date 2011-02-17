@@ -9,6 +9,11 @@
   2001 - 2009 (c) code by Stefan Hendriks
 
   */
+#ifndef REGIONS_H_
+#define REGIONS_H_
+
+#define MAX_WORLD		4			// 4 worlds is enough for now
+#define MAX_REGIONS		27			// not more then 27 regions as dune 2 has
 
 void REGION_DRAW(int i); // draw this region
 int  REGION_OVER(); // what region is the mouse on?
@@ -25,3 +30,4 @@ public:
     bool bSelectable;   // selectable for attacking (default = false)
 };
 
+#endif

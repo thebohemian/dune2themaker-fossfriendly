@@ -14,6 +14,7 @@
 
 // Forward declarations
 #include <GameState.h>
+#include <regions.h>
 
 class cGame {
 

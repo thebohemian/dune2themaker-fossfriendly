@@ -9,7 +9,13 @@
   2001 - 2009 (c) code by Stefan Hendriks
 
   */
+#ifndef BULLET_H_
+#define BULLET_H_
 
+// Indexes for keeping score
+// TODO: Instead of random indices, specialized methods should be introduced
+#define INDEX_KILLS_UNITS   0
+#define INDEX_KILLS_STRUCTURES 1
 
 class cBullet
 {
@@ -48,7 +54,6 @@ public:
 
 private:
 
-
-
 };
 
+#endif
