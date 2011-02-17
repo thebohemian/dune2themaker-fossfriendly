@@ -11,8 +11,9 @@
   */
 
 #include "../../include/d2tmh.h"
-
+#include <gameobjects/projectiles/bullet.h>
 #include <math.h>
+
 void cBullet::init()
 {
     bAlive=false;        // alive or not?, when dying, a particle is created

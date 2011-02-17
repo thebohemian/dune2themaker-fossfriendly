@@ -18,6 +18,10 @@
 
 #include "include/d2tmh.h"
 #include <GameState.h>
+#include <regions.h>
+
+// Font size
+#define GAME_FONTSIZE 8
 
 cGame::cGame() {
 	screen_x = 800;

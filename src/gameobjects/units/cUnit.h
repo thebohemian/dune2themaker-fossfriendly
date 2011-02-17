@@ -9,6 +9,8 @@
   2001 - 2009 (c) code by Stefan Hendriks
 
   */
+// Max length of a path (per unit)
+#define MAX_PATH_SIZE    256
 
 // Define TRANSFER stuff for reinforcements	
 #define TRANSFER_NONE	-1				// nothing to transfer

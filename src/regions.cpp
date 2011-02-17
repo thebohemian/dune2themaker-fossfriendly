@@ -12,6 +12,8 @@
 
 #include "include/d2tmh.h"
 
+#include <regions.h>
+
 void REGION_SETUP(int iMission, int iHouse)
 {
     // The first mission, nothing is 'ready', as the pieces gets placed and taken by the houses.
