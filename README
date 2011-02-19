@@ -12,3 +12,36 @@ The aim of this repository is to:
 3) Integrate whatever distros need.
 
 4) Hopefully merge those changes back.
+
+Build dependencies
+-------------------
+
+* CMake 2.8
+* Allegro 4.x
+* freetype
+
+How to build
+-------------
+
+* Have CMake 2.8.x installed
+
+* create a build directory and change into it
+ mkdir build
+ cd build
+
+* create cmake files
+ cmake ..
+
+* this will tell you about missing dependencies (install those)
+
+* build
+ make
+
+How to run
+-----------
+
+* after successful build
+* change to 'resources' folder
+* run binary from 'build' folder
+ ../build/dune2themaker
+
