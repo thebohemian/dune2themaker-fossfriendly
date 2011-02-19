@@ -65,12 +65,6 @@
 // HOUSES stuff
 #define MAX_HOUSES        12      // 12 different type of houses
 
-// UNITS stuff
-#define MAX_UNIT_TYPES    25     // maximum of unit types
-
-// STRUCTURES stuff
-#define MAX_BUILDING_TYPES 25    // max of building types
-
 // BULLETS stuff
 #define MAX_BULLET_TYPES      30    // max of 30 types of bullets
 
